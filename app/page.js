@@ -284,12 +284,36 @@ export default function BloodDonationTracker() {
             </div>
             
             <form onSubmit={handleAddDonation} className="p-6 space-y-4">
-              {/* Form fields here (same as previous code) */}
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Date</label>
                 <input type="date" required value={newDonation.date} onChange={(e) => setNewDonation({...newDonation, date: e.target.value})} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all" />
               </div>
-              {/* ... other inputs ... */}
+              
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Location</label>
+                <input type="text" required value={newDonation.location} onChange={(e) => setNewDonation({...newDonation, location: e.target.value})} placeholder="Hospital or donation center" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all" />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Type</label>
+                <select required value={newDonation.type} onChange={(e) => setNewDonation({...newDonation, type: e.target.value})} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all">
+                  <option value="Whole Blood">Whole Blood</option>
+                  <option value="Plasma">Plasma</option>
+                  <option value="Platelets">Platelets</option>
+                  <option value="Double Red Cells">Double Red Cells</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Volume (ml)</label>
+                <input type="number" required value={newDonation.volume} onChange={(e) => setNewDonation({...newDonation, volume: e.target.value})} min="1" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all" />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Notes (Optional)</label>
+                <textarea value={newDonation.notes} onChange={(e) => setNewDonation({...newDonation, notes: e.target.value})} placeholder="Any additional notes..." rows="3" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all resize-none"></textarea>
+              </div>
+              
               <div className="pt-2">
                 <button type="submit" className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl shadow-lg shadow-red-100 transition-all active:scale-95">Save Record</button>
               </div>
