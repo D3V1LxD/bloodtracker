@@ -26,13 +26,27 @@ const getDaysDiff = (date1, date2) => {
   return Math.round((date2 - date1) / oneDay);
 };
 
+// Calculate exact age from birthdate
+const calculateAge = (birthDate) => {
+  const today = new Date();
+  const birth = new Date(birthDate);
+  let age = today.getFullYear() - birth.getFullYear();
+  const monthDiff = today.getMonth() - birth.getMonth();
+  
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+  
+  return age;
+};
+
 export default function BloodDonationTracker() {
   // --- State Management ---
   const [user, setUser] = useState({
     name: "Md. Mahim Khan",
     bloodType: "B+",
     donorId: "BD-MK024", 
-    age: 24,
+    age: calculateAge("2001-04-07"),
     weight: "62kg",
     height: "5'7''"
   });
