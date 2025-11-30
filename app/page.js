@@ -26,18 +26,26 @@ const getDaysDiff = (date1, date2) => {
   return Math.round((date2 - date1) / oneDay);
 };
 
-// Calculate exact age from birthdate
+// Calculate exact age from birthdate with years and months
 const calculateAge = (birthDate) => {
   const today = new Date();
   const birth = new Date(birthDate);
-  let age = today.getFullYear() - birth.getFullYear();
-  const monthDiff = today.getMonth() - birth.getMonth();
+  let years = today.getFullYear() - birth.getFullYear();
+  let months = today.getMonth() - birth.getMonth();
   
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-    age--;
+  if (months < 0 || (months === 0 && today.getDate() < birth.getDate())) {
+    years--;
+    months += 12;
   }
   
-  return age;
+  if (today.getDate() < birth.getDate()) {
+    months--;
+    if (months < 0) {
+      months = 11;
+    }
+  }
+  
+  return `${years}y ${months}m`;
 };
 
 export default function BloodDonationTracker() {
@@ -206,7 +214,7 @@ export default function BloodDonationTracker() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
            <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
               <span className="text-xs text-slate-400 uppercase font-semibold">Age</span>
-              <div className="font-medium text-slate-700">{user.age} Years</div>
+              <div className="font-medium text-slate-700">{user.age}</div>
            </div>
            <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
               <span className="text-xs text-slate-400 uppercase font-semibold">Weight</span>
