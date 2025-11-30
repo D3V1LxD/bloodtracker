@@ -360,8 +360,28 @@ export default function BloodDonationTracker() {
                 <textarea value={newDonation.notes} onChange={(e) => setNewDonation({...newDonation, notes: e.target.value})} placeholder="Any additional notes..." rows="3" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all resize-none"></textarea>
               </div>
               
+              {!eligibilityStatus.eligible && (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start space-x-2">
+                  <Clock className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-sm text-amber-800">
+                    <p className="font-semibold">Waiting Period Active</p>
+                    <p>You must wait {eligibilityStatus.daysRemaining} more days before your next donation.</p>
+                  </div>
+                </div>
+              )}
+              
               <div className="pt-2">
-                <button type="submit" className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl shadow-lg shadow-red-100 transition-all active:scale-95">Save Record</button>
+                <button 
+                  type="submit" 
+                  disabled={!eligibilityStatus.eligible}
+                  className={`w-full font-semibold py-3 rounded-xl shadow-lg transition-all ${
+                    eligibilityStatus.eligible 
+                      ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-100 active:scale-95' 
+                      : 'bg-slate-300 text-slate-500 cursor-not-allowed shadow-slate-100'
+                  }`}
+                >
+                  {eligibilityStatus.eligible ? 'Save Record' : 'Not Eligible Yet'}
+                </button>
               </div>
             </form>
           </div>
