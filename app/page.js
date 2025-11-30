@@ -48,6 +48,25 @@ const calculateAge = (birthDate) => {
   return `${years}y ${months}m`;
 };
 
+// Calculate BMI from weight and height
+const calculateBMI = (weight, height) => {
+  // Convert weight from string (e.g., "62kg") to number
+  const weightKg = parseFloat(weight);
+  
+  // Convert height from feet and inches (e.g., "5'7''") to meters
+  const heightMatch = height.match(/(\d+)'(\d+)''/);
+  if (heightMatch) {
+    const feet = parseInt(heightMatch[1]);
+    const inches = parseInt(heightMatch[2]);
+    const totalInches = (feet * 12) + inches;
+    const heightM = totalInches * 0.0254;
+    
+    const bmi = weightKg / (heightM * heightM);
+    return bmi.toFixed(1);
+  }
+  return "N/A";
+};
+
 export default function BloodDonationTracker() {
   // --- State Management ---
   const [user, setUser] = useState({
@@ -56,7 +75,8 @@ export default function BloodDonationTracker() {
     donorId: "BD-MK024", 
     age: calculateAge("2001-04-07"),
     weight: "62kg",
-    height: "5'7''"
+    height: "5'7''",
+    bmi: calculateBMI("62kg", "5'7''")
   });
 
   const [donations, setDonations] = useState([
@@ -211,7 +231,7 @@ export default function BloodDonationTracker() {
         </div>
 
         {/* User Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
            <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
               <span className="text-xs text-slate-400 uppercase font-semibold">Age</span>
               <div className="font-medium text-slate-700">{user.age}</div>
@@ -223,6 +243,10 @@ export default function BloodDonationTracker() {
            <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
               <span className="text-xs text-slate-400 uppercase font-semibold">Height</span>
               <div className="font-medium text-slate-700">{user.height}</div>
+           </div>
+           <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+              <span className="text-xs text-slate-400 uppercase font-semibold">BMI</span>
+              <div className="font-medium text-slate-700">{user.bmi}</div>
            </div>
            <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
               <span className="text-xs text-slate-400 uppercase font-semibold">Blood Group</span>
